@@ -1,0 +1,12 @@
+#!/bin/bash
+#Specifies the log file for grep and awk to search.
+LOG_FILE='/var/log/auth.log'
+
+#Looks for successful login attempts and lists them.
+echo "Successful login attempts:"
+grep "LOGIN" $LOG_FILE | awk '{print $5}' | sort | uniq -c | sort -nr
+echo
+
+#Looks for failed login attempts and lists them.
+echo "Failed login attempts:"
+grep "FAILED LOGIN" $LOG_FILE | awk '{print $5}' | sort | uniq -c | sort -nr
