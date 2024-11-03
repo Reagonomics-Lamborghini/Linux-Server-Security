@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#Specifies the directory to be monitored.
+MONITORED_DIR='/var/log/secure'
+
+#Lets the user know that the directory is being monitored and how to cancel it.
+echo "Monitoring $MONITORED_DIR"
+echo "CTRL+C to end."
+
+#Uses inotify to monitor the directory for a variety of changes.
+inotifywait -m -r -e create,delete,modify,move "$MONITORED_DIR" --format '%w%f %e'
+while read FILE EVENT
+do
+  echo "Detected $EVENT on $FILE at $(date)"
+done
